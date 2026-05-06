@@ -266,6 +266,10 @@ function ShortcutHints({ answerVisible }: { answerVisible: boolean }) {
         <Kbd>N</Kbd>
         <span>笔记</span>
       </span>
+      <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        <Kbd>A</Kbd>
+        <span>AI 助手</span>
+      </span>
     </div>
   )
 }
@@ -1967,8 +1971,7 @@ function AIDrawer({
   onOpenSettings,
   initialPrompt = null,
 }: AIDrawerProps) {
-  const { config, getMessages, clearSession } = useAIStore()
-  const messages = getMessages(question.id)
+  const { config } = useAIStore()
 
   // Lock body scroll on mobile when open
   useEffect(() => {
@@ -2103,53 +2106,8 @@ function AIDrawer({
             )}
           </div>
 
-          {/* Right: clear history + Esc hint + close */}
+          {/* Right: Esc hint + close */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
-            {messages.length > 0 && (
-              <button
-                type="button"
-                onClick={() => clearSession(question.id)}
-                title="清除对话历史"
-                style={{
-                  width: 26,
-                  height: 26,
-                  borderRadius: 7,
-                  border: 'none',
-                  background: 'transparent',
-                  color: 'var(--text-3)',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'all 0.15s',
-                }}
-                onMouseEnter={(e) => {
-                  ;(e.currentTarget as HTMLElement).style.background = 'var(--danger-light)'
-                  ;(e.currentTarget as HTMLElement).style.color = 'var(--danger)'
-                }}
-                onMouseLeave={(e) => {
-                  ;(e.currentTarget as HTMLElement).style.background = 'transparent'
-                  ;(e.currentTarget as HTMLElement).style.color = 'var(--text-3)'
-                }}
-              >
-                {/* trash icon */}
-                <svg
-                  width="13"
-                  height="13"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="3 6 5 6 21 6" />
-                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-                  <path d="M10 11v6M14 11v6" />
-                  <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
-                </svg>
-              </button>
-            )}
             {/* Esc hint — desktop only */}
             <span
               style={{
@@ -2565,6 +2523,11 @@ export default function QuestionDetail() {
       if (!e.metaKey && !e.ctrlKey && !e.altKey && e.key.toLowerCase() === 'n') {
         e.preventDefault()
         setNoteDrawerOpen((open) => !open)
+        return
+      }
+      if (!noteDrawerOpen && !e.metaKey && !e.ctrlKey && !e.altKey && e.key.toLowerCase() === 'a') {
+        e.preventDefault()
+        setAiDrawerOpen(true)
         return
       }
       if (noteDrawerOpen) return
@@ -3110,7 +3073,7 @@ export default function QuestionDetail() {
 
               <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                 <AnswerAIButton
-                  title={isAiEnabled ? '打开 AI 助手' : 'AI 助手（请先配置）'}
+                  title={isAiEnabled ? '打开 AI 助手（A）' : 'AI 助手（请先配置，快捷键 A）'}
                   active={aiDrawerOpen}
                   onClick={() => setAiDrawerOpen(true)}
                 >
@@ -3540,7 +3503,7 @@ export default function QuestionDetail() {
           onMouseLeave={(e) => {
             ;(e.currentTarget as HTMLElement).style.transform = 'scale(1)'
           }}
-          title={isAiEnabled ? '打开 AI 助手' : 'AI 助手（请先配置）'}
+          title={isAiEnabled ? '打开 AI 助手（A）' : 'AI 助手（请先配置，快捷键 A）'}
         >
           <svg
             width="22"

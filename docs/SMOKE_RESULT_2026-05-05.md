@@ -1,11 +1,11 @@
-# iFace 1.1 Smoke Result
+# iFace 1.1.1 Smoke Result
 
-> 状态：正式验收记录。这里记录 1.1.0 发版前的自动门禁、外部服务 smoke、浏览器抽样和数据安全证据。
+> 状态：正式验收记录。这里记录 1.1.1 发版前的自动门禁、外部服务 smoke、浏览器抽样和数据安全证据。
 
 ## 环境
 
 - 日期：2026-05-06
-- 应用版本：`1.1.0`
+- 应用版本：`1.1.1`
 - 生产预览：`http://127.0.0.1:4173`
 - 浏览器验证：Playwright CLI
 - 外部服务验证：真实 AI Key、真实 GitHub Gist Token，记录文件不包含密钥
@@ -22,7 +22,7 @@ bun run check:all
 
 - `bun run check`：通过，Biome 未报错。
 - `bun run check:version`：通过，`package.json`、README 徽章、Roadmap、Smoke 记录和设置页版本展示一致。
-- `bun run check:release`：通过，当前 `1.1.0` 与 `package.json` 一致；发版审计、Smoke 记录、外部服务证据和 Release notes 均为正式状态。
+- `bun run check:release`：通过，当前 `1.1.1` 与 `package.json` 一致；发版审计、Smoke 记录、外部服务证据和 Release notes 均为正式状态。
 - `bun run check:quality-gate`：通过，`check:all` 子门禁顺序、发版脚本和文档门禁列表检查正常。
 - `bun run check:docs`：通过，README/docs 本地链接、`.env.example`、`LICENSE`、README 预览截图 PNG / WebP 资源正常。
 - `bun run check:external-records`：通过，外部 smoke JSON 结构、应用版本、7 天时效、关键 evidence 和密钥字段扫描正常。
@@ -49,12 +49,12 @@ bun run smoke:external:gist
 证据：
 
 - `docs/external-ai-smoke-result.json`
-  - `packageVersion` 为 `1.1.0`
+  - `packageVersion` 为 `1.1.1`
   - `targets.ai=true`
   - 包含 `ai.chat`：真实流式对话返回模型、接口域名、响应长度和 streamed 长度
   - 包含 `ai.feedback`：真实作答反馈返回模型、接口域名、反馈长度、streamed 长度和复盘笔记长度
 - `docs/external-gist-smoke-result.json`
-  - `packageVersion` 为 `1.1.0`
+  - `packageVersion` 为 `1.1.1`
   - `targets.gist=true`
   - 包含 `gist.read`：真实临时私有 Gist 读取到 v6 备份、题目笔记、重点题、AI 会话和自定义题
   - 包含 `gist.update`：真实 PATCH 后读取到 v6 备份和新增自定义来源
@@ -72,6 +72,8 @@ bun run smoke:external:gist
 - 题目详情顶部「重点题 / 笔记」入口已弱化为仅图标按钮，并保留可理解的 aria 标签。
 - 题目详情作答区语音输入已弱化为仅图标按钮。
 - 参考答案右上角展示 AI、讲解题目、讲解知识点三个图标入口；点击讲解题目可打开 AI 抽屉。
+- AI 助手单条消息支持复制；AI 回复支持重试回答，重试时会回滚到对应用户提问前的上下文。
+- AI 助手抽屉清空按钮语义明确为「清空当前题目 AI 会话」，只清理当前题目的对话。
 - 设置页数据管理 tab 展示题目、学习记录、题目笔记、重点题、AI 会话统计。
 - 设置页数据统计在 390px 移动宽度下变为两列，无横向溢出。
 - 题目详情、笔记抽屉、设置面板在 390px 和 414px 移动宽度下无横向溢出。
@@ -132,4 +134,4 @@ bun run smoke:external:gist
 
 ## 当前结论
 
-自动门禁、真实外部服务 smoke、浏览器抽样和数据安全验证均已通过，当前状态可作为 iFace 1.1.0 正式发布候选。
+自动门禁、真实外部服务 smoke、浏览器抽样和数据安全验证均已通过，当前状态可作为 iFace 1.1.1 正式发布候选。

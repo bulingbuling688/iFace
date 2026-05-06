@@ -328,6 +328,7 @@ type AIAction =
   | { type: 'SET_CONFIG'; config: Partial<AIConfig> }
   | { type: 'RESET_CONFIG' }
   | { type: 'ADD_MESSAGE'; questionId: string; message: AIMessage }
+  | { type: 'SET_MESSAGES'; questionId: string; messages: AIMessage[] }
   | { type: 'UPSERT_SESSIONS'; sessions: AISession[] }
   | { type: 'CLEAR_SESSION'; questionId: string }
   | { type: 'CLEAR_ALL_SESSIONS' }
@@ -364,6 +365,26 @@ function reducer(state: AIStoreState, action: AIAction): AIStoreState {
         ...state,
         sessions: { ...state.sessions, [action.questionId]: session },
       }
+    }
+
+    case 'SET_MESSAGES': {
+      const next = { ...state.sessions }
+
+      if (action.messages.length === 0) {
+        delete next[action.questionId]
+        return { ...state, sessions: next }
+      }
+
+      const existing = state.sessions[action.questionId]
+      const now = Date.now()
+      next[action.questionId] = {
+        questionId: action.questionId,
+        messages: action.messages,
+        createdAt: existing?.createdAt ?? now,
+        updatedAt: now,
+      }
+
+      return { ...state, sessions: next }
     }
 
     case 'UPSERT_SESSIONS': {
@@ -591,6 +612,10 @@ export function useAIStore() {
     dispatch({ type: 'CLEAR_SESSION', questionId })
   }, [])
 
+  const replaceSessionMessages = useCallback((questionId: string, messages: AIMessage[]) => {
+    dispatch({ type: 'SET_MESSAGES', questionId, messages })
+  }, [])
+
   const clearAllSessions = useCallback(() => {
     dispatch({ type: 'CLEAR_ALL_SESSIONS' })
   }, [])
@@ -712,6 +737,7 @@ export function useAIStore() {
     getSession,
     getMessages,
     clearSession,
+    replaceSessionMessages,
     clearAllSessions,
     upsertSessions,
 

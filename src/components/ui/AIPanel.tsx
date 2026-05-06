@@ -145,6 +145,59 @@ function IconSettings() {
   )
 }
 
+function IconCopy() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="9" y="9" width="13" height="13" rx="2" />
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+    </svg>
+  )
+}
+
+function IconCheckSmall() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  )
+}
+
+function IconRetry() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="23 4 23 10 17 10" />
+      <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+    </svg>
+  )
+}
+
 // ─── Typing Indicator ─────────────────────────────────────────────────────────
 
 function TypingDots() {
@@ -180,11 +233,74 @@ interface MessageBubbleProps {
   message: AIMessage
   isStreaming?: boolean
   streamingText?: string
+  copied?: boolean
+  retryDisabled?: boolean
+  onCopy?: () => void
+  onRetry?: () => void
 }
 
-function MessageBubble({ message, isStreaming, streamingText }: MessageBubbleProps) {
+function MessageActionButton({
+  title,
+  disabled = false,
+  children,
+  onClick,
+}: {
+  title: string
+  disabled?: boolean
+  children: React.ReactNode
+  onClick: () => void
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={title}
+      title={title}
+      disabled={disabled}
+      onClick={onClick}
+      style={{
+        width: 24,
+        height: 22,
+        borderRadius: 6,
+        border: '1px solid transparent',
+        background: 'transparent',
+        color: 'var(--text-3)',
+        cursor: disabled ? 'default' : 'pointer',
+        opacity: disabled ? 0.45 : 1,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        transition: 'all 0.15s',
+      }}
+      onMouseEnter={(e) => {
+        if (disabled) return
+        e.currentTarget.style.background = 'var(--surface-3)'
+        e.currentTarget.style.borderColor = 'var(--border-subtle)'
+        e.currentTarget.style.color = 'var(--text)'
+      }}
+      onMouseLeave={(e) => {
+        if (disabled) return
+        e.currentTarget.style.background = 'transparent'
+        e.currentTarget.style.borderColor = 'transparent'
+        e.currentTarget.style.color = 'var(--text-3)'
+      }}
+    >
+      {children}
+    </button>
+  )
+}
+
+function MessageBubble({
+  message,
+  isStreaming,
+  streamingText,
+  copied = false,
+  retryDisabled = false,
+  onCopy,
+  onRetry,
+}: MessageBubbleProps) {
   const isUser = message.role === 'user'
   const content = isStreaming && streamingText !== undefined ? streamingText : message.content
+  const canShowActions = Boolean(content.trim()) && !isStreaming
 
   return (
     <div
@@ -215,38 +331,71 @@ function MessageBubble({ message, isStreaming, streamingText }: MessageBubblePro
         {isUser ? <IconUser /> : <IconBot />}
       </div>
 
-      {/* Bubble */}
       <div
         style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: isUser ? 'flex-end' : 'flex-start',
           maxWidth: '85%',
-          padding: isUser ? '8px 12px' : '10px 14px',
-          borderRadius: isUser ? '14px 4px 14px 14px' : '4px 14px 14px 14px',
-          background: isUser ? 'var(--primary)' : 'var(--surface-2)',
-          color: isUser ? 'white' : 'var(--text)',
-          border: isUser ? 'none' : '1px solid var(--border-subtle)',
-          fontSize: 13,
-          lineHeight: 1.65,
-          wordBreak: 'break-word',
+          minWidth: 0,
         }}
       >
-        {isUser ? (
-          <span style={{ whiteSpace: 'pre-wrap' }}>{content}</span>
-        ) : content ? (
+        <div
+          style={{
+            width: 'fit-content',
+            maxWidth: '100%',
+            padding: isUser ? '8px 12px' : '10px 14px',
+            borderRadius: isUser ? '14px 4px 14px 14px' : '4px 14px 14px 14px',
+            background: isUser ? 'var(--primary)' : 'var(--surface-2)',
+            color: isUser ? 'white' : 'var(--text)',
+            border: isUser ? 'none' : '1px solid var(--border-subtle)',
+            fontSize: 13,
+            lineHeight: 1.65,
+            wordBreak: 'break-word',
+          }}
+        >
+          {isUser ? (
+            <span style={{ whiteSpace: 'pre-wrap' }}>{content}</span>
+          ) : content ? (
+            <div
+              className="prose"
+              style={
+                {
+                  fontSize: 13,
+                  color: 'var(--text)',
+                  '--text': 'var(--text)',
+                } as React.CSSProperties
+              }
+            >
+              <MarkdownRenderer content={content} />
+              {isStreaming && <TypingDots />}
+            </div>
+          ) : (
+            <TypingDots />
+          )}
+        </div>
+
+        {canShowActions && (
           <div
-            className="prose"
-            style={
-              {
-                fontSize: 13,
-                color: 'var(--text)',
-                '--text': 'var(--text)',
-              } as React.CSSProperties
-            }
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+              marginTop: 4,
+              paddingInline: 2,
+            }}
           >
-            <MarkdownRenderer content={content} />
-            {isStreaming && <TypingDots />}
+            {onCopy && (
+              <MessageActionButton title={copied ? '已复制' : '复制消息'} onClick={onCopy}>
+                {copied ? <IconCheckSmall /> : <IconCopy />}
+              </MessageActionButton>
+            )}
+            {!isUser && onRetry && (
+              <MessageActionButton title="重试回答" disabled={retryDisabled} onClick={onRetry}>
+                <IconRetry />
+              </MessageActionButton>
+            )}
           </div>
-        ) : (
-          <TypingDots />
         )}
       </div>
     </div>
@@ -526,6 +675,22 @@ function QuickActionBar({
   )
 }
 
+async function copyTextToClipboard(text: string): Promise<void> {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text)
+    return
+  }
+
+  const textarea = document.createElement('textarea')
+  textarea.value = text
+  textarea.style.position = 'fixed'
+  textarea.style.left = '-9999px'
+  document.body.appendChild(textarea)
+  textarea.select()
+  document.execCommand('copy')
+  document.body.removeChild(textarea)
+}
+
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 interface AIPanelProps {
@@ -550,6 +715,7 @@ export function AIPanel({
     streamingQuestionId,
     getMessages,
     clearSession,
+    replaceSessionMessages,
     sendMessage,
     abortStream,
   } = useAIStore()
@@ -561,6 +727,7 @@ export function AIPanel({
   const [input, setInput] = useState('')
   const [streamingText, setStreamingText] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
@@ -607,29 +774,29 @@ export function AIPanel({
 
   const isReady = config.enabled && config.apiKey.trim().length > 0
 
-  const buildContextMessages = useCallback((): { messages: AIMessage[]; systemSuffix: string } => {
-    const systemSuffix = buildQuestionSystemSuffix(
-      question.question,
-      question.module,
-      question.difficulty,
-      answerVisible ? question.answer : undefined,
-    )
+  const buildContextMessages = useCallback(
+    (sourceMessages: AIMessage[] = messages): { messages: AIMessage[]; systemSuffix: string } => {
+      const systemSuffix = buildQuestionSystemSuffix(
+        question.question,
+        question.module,
+        question.difficulty,
+        answerVisible ? question.answer : undefined,
+      )
 
-    if (messages.length === 0) {
-      // First turn: attach question context as system suffix, no fake history
+      if (sourceMessages.length === 0) {
+        return {
+          messages: [],
+          systemSuffix,
+        }
+      }
+
       return {
-        messages: [],
+        messages: [...sourceMessages],
         systemSuffix,
       }
-    }
-
-    // Follow-up turns: only carry real conversation history, no fake prefix
-    // Question context is already baked into system prompt from first turn's exchange
-    return {
-      messages: [...messages],
-      systemSuffix,
-    }
-  }, [question, answerVisible, messages])
+    },
+    [question, answerVisible, messages],
+  )
 
   const handleSend = useCallback(
     async (text?: string) => {
@@ -679,6 +846,64 @@ export function AIPanel({
     setStreamingText('')
     setTimeout(() => inputRef.current?.focus(), 60)
   }, [clearSession, abortStream, questionId, isStreaming])
+
+  const handleCopyMessage = useCallback(async (messageId: string, text: string) => {
+    setCopiedMessageId(messageId)
+    try {
+      await copyTextToClipboard(text)
+      window.setTimeout(() => {
+        setCopiedMessageId((current) => (current === messageId ? null : current))
+      }, 1400)
+    } catch {
+      setError('复制失败，请手动选择文本复制')
+    }
+  }, [])
+
+  const handleRetryMessage = useCallback(
+    async (messageIndex: number) => {
+      if (isStreaming) return
+
+      const target = messages[messageIndex]
+      if (!target || target.role !== 'assistant') return
+
+      let userIndex = -1
+      for (let i = messageIndex - 1; i >= 0; i -= 1) {
+        if (messages[i]?.role === 'user') {
+          userIndex = i
+          break
+        }
+      }
+
+      if (userIndex < 0) return
+
+      const userMessage = messages[userIndex]
+      const previousMessages = messages.slice(0, userIndex)
+      replaceSessionMessages(questionId, previousMessages)
+      setInput('')
+      setError(null)
+      setStreamingText('')
+
+      const { messages: ctxMessages, systemSuffix } = buildContextMessages(previousMessages)
+
+      await sendMessage(
+        questionId,
+        userMessage.content,
+        ctxMessages,
+        systemSuffix,
+        (chunk) => {
+          setStreamingText((prev) => prev + chunk)
+        },
+        () => {
+          setStreamingText('')
+        },
+        (err) => {
+          setError(err)
+          setStreamingText('')
+        },
+      )
+    },
+    [buildContextMessages, isStreaming, messages, questionId, replaceSessionMessages, sendMessage],
+  )
 
   const handleQuickAction = useCallback(
     (prompt: string) => {
@@ -737,6 +962,49 @@ export function AIPanel({
         />
       )}
 
+      {headless && messages.length > 0 && (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            padding: '6px 12px 0',
+            background: 'var(--surface)',
+            flexShrink: 0,
+          }}
+        >
+          <button
+            type="button"
+            onClick={handleClear}
+            aria-label="清空当前题目 AI 会话"
+            title="清空当前题目 AI 会话"
+            style={{
+              width: 26,
+              height: 26,
+              borderRadius: 7,
+              border: 'none',
+              background: 'transparent',
+              color: 'var(--text-3)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.15s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'var(--danger-light)'
+              e.currentTarget.style.color = 'var(--danger)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent'
+              e.currentTarget.style.color = 'var(--text-3)'
+            }}
+          >
+            <IconClear />
+          </button>
+        </div>
+      )}
+
       {/* Messages area */}
       <div
         ref={messagesContainerRef}
@@ -761,13 +1029,19 @@ export function AIPanel({
           >
             {messages.map((msg, idx) => {
               const isLastAssistant = idx === messages.length - 1 && msg.role === 'assistant'
-              const messageKey = `${msg.role}-${msg.content}`
+              const messageKey = `${idx}-${msg.role}-${msg.content}`
               return (
                 <MessageBubble
                   key={messageKey}
                   message={msg}
                   isStreaming={isStreaming && isLastAssistant && streamingText !== ''}
                   streamingText={isStreaming && isLastAssistant ? streamingText : undefined}
+                  copied={copiedMessageId === messageKey}
+                  retryDisabled={isStreaming}
+                  onCopy={() => handleCopyMessage(messageKey, msg.content)}
+                  onRetry={
+                    msg.role === 'assistant' ? () => void handleRetryMessage(idx) : undefined
+                  }
                 />
               )
             })}
@@ -991,7 +1265,8 @@ function PanelHeader({
         <button
           type="button"
           onClick={onClear}
-          title="清除对话"
+          aria-label="清空当前题目 AI 会话"
+          title="清空当前题目 AI 会话"
           style={{
             width: 26,
             height: 26,
