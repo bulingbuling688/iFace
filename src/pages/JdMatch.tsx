@@ -1,12 +1,69 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { SettingsDrawer } from '@/components/layout/SettingsDrawer'
 import { Button, Spinner } from '@/components/ui'
 import { MarkdownRenderer } from '@/components/ui/MarkdownRenderer'
 import { type ChatCompletionMessage, requestChatCompletionStream } from '@/lib/aiClient'
+import { deleteJdMatchReport, getAllJdMatchReports, putJdMatchReport } from '@/lib/db'
 import { parseResumeFile } from '@/lib/resumeParser'
 import { useAIStore } from '@/store/useAIStore'
+import type { JdMatchReport } from '@/types'
 
 const DEFAULT_ROLE = '前端工程师'
+const REPORT_SECTION_TITLES = new Set([
+  '总体判断',
+  '匹配点',
+  '风险点',
+  '缺失关键词',
+  '可能追问',
+  '准备建议',
+])
+
+function formatDateTime(timestamp?: number): string {
+  if (!timestamp) return '未保存'
+  return new Intl.DateTimeFormat('zh-CN', {
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(timestamp)
+}
+
+function extractGeneratedTitle(markdown: string, roleTitle: string): string {
+  const titleLine = markdown.split('\n').find(isGeneratedTitleLine)
+  const title = titleLine ? normalizeGeneratedTitle(titleLine) : ''
+  if (title) return title.slice(0, 32)
+  return `${roleTitle || DEFAULT_ROLE} · JD 诊断`
+}
+
+function stripGeneratedTitle(markdown: string): string {
+  const lines = markdown.split('\n')
+  const firstContentIndex = lines.findIndex((line) => line.trim().length > 0)
+  if (firstContentIndex === -1 || !isGeneratedTitleLine(lines[firstContentIndex])) {
+    return markdown.trim()
+  }
+
+  return [...lines.slice(0, firstContentIndex), ...lines.slice(firstContentIndex + 1)]
+    .join('\n')
+    .trim()
+}
+
+function isGeneratedTitleLine(line: string): boolean {
+  const trimmed = line.trim()
+  const cleaned = normalizeGeneratedTitle(trimmed)
+  if (!cleaned) return false
+  if (/^#{0,6}\s*\*{0,2}标题[:：]/.test(trimmed)) return true
+  return /^#{1,6}\s+/.test(trimmed) && !REPORT_SECTION_TITLES.has(cleaned)
+}
+
+function normalizeGeneratedTitle(line: string): string {
+  return line
+    .trim()
+    .replace(/^#{1,6}\s*/, '')
+    .replace(/^\*+|\*+$/g, '')
+    .replace(/^标题[:：]\s*/, '')
+    .replace(/[*#`]/g, '')
+    .trim()
+}
 
 function TextArea({
   value,
@@ -65,6 +122,8 @@ function buildJdMatchMessages(input: {
 目标岗位：${input.roleTitle || DEFAULT_ROLE}
 
 请用 Markdown 输出，并严格包含这些部分：
+标题：用 12 个字以内生成本次诊断标题
+
 ## 总体判断
 给出 1 段结论，并给出 0-100 的匹配分。
 
@@ -103,6 +162,8 @@ export default function JdMatch() {
   const [resumeFileName, setResumeFileName] = useState<string | null>(null)
   const [resumeMessage, setResumeMessage] = useState<string | null>(null)
   const [report, setReport] = useState('')
+  const [savedReports, setSavedReports] = useState<JdMatchReport[]>([])
+  const [activeReportId, setActiveReportId] = useState<string | null>(null)
   const [streamingText, setStreamingText] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -111,6 +172,15 @@ export default function JdMatch() {
 
   const aiReady = config.enabled && config.apiKey.trim().length > 0
   const displayReport = streamingText || report
+
+  const loadReports = useCallback(async () => {
+    const loaded = await getAllJdMatchReports()
+    setSavedReports(loaded)
+  }, [])
+
+  useEffect(() => {
+    loadReports()
+  }, [loadReports])
 
   const handleResumeFile = useCallback(async (file: File) => {
     setParsingResume(true)
@@ -165,14 +235,68 @@ export default function JdMatch() {
         }),
         onDelta: (delta) => setStreamingText((prev) => prev + delta),
       })
-      setReport(result)
+      const markdown = stripGeneratedTitle(result)
+      const now = Date.now()
+      const nextReport: JdMatchReport = {
+        id: crypto.randomUUID(),
+        title: extractGeneratedTitle(result, roleTitle.trim() || DEFAULT_ROLE),
+        roleTitle: roleTitle.trim() || DEFAULT_ROLE,
+        jdText: jdText.trim(),
+        resumeText: resumeText.trim(),
+        resumeFileName: resumeFileName ?? undefined,
+        markdown,
+        model: config.model,
+        createdAt: now,
+        updatedAt: now,
+      }
+
+      await putJdMatchReport(nextReport)
+      setSavedReports((prev) => [nextReport, ...prev].sort((a, b) => b.updatedAt - a.updatedAt))
+      setActiveReportId(nextReport.id)
+      setReport(markdown)
       setStreamingText('')
     } catch (err) {
       setError(err instanceof Error ? err.message : '生成诊断失败')
     } finally {
       setAnalyzing(false)
     }
-  }, [aiReady, config, jdText, resumeText, roleTitle])
+  }, [aiReady, config, jdText, resumeFileName, resumeText, roleTitle])
+
+  const handleSelectReport = useCallback((item: JdMatchReport) => {
+    setRoleTitle(item.roleTitle)
+    setJdText(item.jdText)
+    setResumeText(item.resumeText)
+    setResumeFileName(item.resumeFileName ?? null)
+    setResumeMessage(null)
+    setReport(item.markdown)
+    setStreamingText('')
+    setError(null)
+    setActiveReportId(item.id)
+  }, [])
+
+  const handleDeleteReport = useCallback(
+    async (id: string) => {
+      await deleteJdMatchReport(id)
+      setSavedReports((prev) => prev.filter((item) => item.id !== id))
+      if (activeReportId === id) {
+        setActiveReportId(null)
+        setReport('')
+      }
+    },
+    [activeReportId],
+  )
+
+  const handleNewDiagnosis = useCallback(() => {
+    setRoleTitle(DEFAULT_ROLE)
+    setJdText('')
+    setResumeText('')
+    setResumeFileName(null)
+    setResumeMessage(null)
+    setReport('')
+    setStreamingText('')
+    setError(null)
+    setActiveReportId(null)
+  }, [])
 
   const handleCopyReport = useCallback(async () => {
     if (!displayReport) return
@@ -202,97 +326,142 @@ export default function JdMatch() {
         {error && <div className="jd-alert">{error}</div>}
 
         <div className="jd-layout">
-          <section className="jd-panel">
-            <div className="jd-panel-header">
-              <h2>诊断材料</h2>
-              <span>{aiReady ? config.model : 'AI 未配置'}</span>
-            </div>
-
-            <div className="jd-form">
-              <label>
-                <span>目标岗位</span>
-                <input
-                  value={roleTitle}
-                  onChange={(event) => setRoleTitle(event.target.value)}
-                  placeholder="例如：前端工程师"
-                />
-              </label>
-
-              <div className="jd-field">
-                <span>岗位 JD</span>
-                <TextArea
-                  value={jdText}
-                  onChange={setJdText}
-                  placeholder="粘贴岗位职责、任职要求、技术栈关键词..."
-                />
+          <aside className="jd-sidebar">
+            <section className="jd-panel">
+              <div className="jd-panel-header">
+                <h2>诊断材料</h2>
+                <span>{aiReady ? config.model : 'AI 未配置'}</span>
               </div>
 
-              <div>
-                <div className="jd-file-row">
-                  <span>简历</span>
-                  <small>{resumeFileName ?? '支持 PDF、DOCX、TXT、MD'}</small>
+              <div className="jd-form">
+                <label>
+                  <span>目标岗位</span>
+                  <input
+                    value={roleTitle}
+                    onChange={(event) => setRoleTitle(event.target.value)}
+                    placeholder="例如：前端工程师"
+                  />
+                </label>
+
+                <div className="jd-field">
+                  <span>岗位 JD</span>
+                  <TextArea
+                    value={jdText}
+                    onChange={setJdText}
+                    placeholder="粘贴岗位职责、任职要求、技术栈关键词..."
+                  />
                 </div>
-                <input
-                  ref={fileRef}
-                  type="file"
-                  accept=".pdf,.docx,.txt,.md,text/plain,text/markdown,application/pdf"
-                  style={{ display: 'none' }}
-                  onChange={(event) => {
-                    const file = event.target.files?.[0]
-                    if (file) handleResumeFile(file)
-                  }}
-                />
-                <div className="jd-actions-row">
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    size="sm"
-                    loading={parsingResume}
-                    onClick={() => fileRef.current?.click()}
-                  >
-                    上传解析
-                  </Button>
-                  {resumeText && (
+
+                <div>
+                  <div className="jd-file-row">
+                    <span>简历</span>
+                    <small>{resumeFileName ?? '支持 PDF、DOCX、TXT、MD'}</small>
+                  </div>
+                  <input
+                    ref={fileRef}
+                    type="file"
+                    accept=".pdf,.docx,.txt,.md,text/plain,text/markdown,application/pdf"
+                    style={{ display: 'none' }}
+                    onChange={(event) => {
+                      const file = event.target.files?.[0]
+                      if (file) handleResumeFile(file)
+                    }}
+                  />
+                  <div className="jd-actions-row">
                     <Button
                       type="button"
-                      variant="ghost"
+                      variant="secondary"
                       size="sm"
-                      onClick={() => {
-                        setResumeText('')
-                        setResumeFileName(null)
-                        setResumeMessage(null)
-                      }}
+                      loading={parsingResume}
+                      onClick={() => fileRef.current?.click()}
                     >
-                      清空
+                      上传解析
+                    </Button>
+                    {resumeText && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setResumeText('')
+                          setResumeFileName(null)
+                          setResumeMessage(null)
+                        }}
+                      >
+                        清空
+                      </Button>
+                    )}
+                  </div>
+                  {resumeMessage && <p className="jd-resume-message">{resumeMessage}</p>}
+                  <TextArea
+                    value={resumeText}
+                    onChange={setResumeText}
+                    placeholder="也可以直接粘贴简历文本..."
+                  />
+                </div>
+
+                <div className="jd-submit-row">
+                  <Button type="button" variant="ghost" onClick={handleNewDiagnosis}>
+                    新诊断
+                  </Button>
+                  {!aiReady && (
+                    <Button type="button" variant="secondary" onClick={() => setSettingsOpen(true)}>
+                      配置 AI
                     </Button>
                   )}
+                  <Button
+                    type="button"
+                    variant="primary"
+                    loading={analyzing}
+                    disabled={!jdText.trim() || !resumeText.trim()}
+                    onClick={handleAnalyze}
+                  >
+                    生成诊断
+                  </Button>
                 </div>
-                {resumeMessage && <p className="jd-resume-message">{resumeMessage}</p>}
-                <TextArea
-                  value={resumeText}
-                  onChange={setResumeText}
-                  placeholder="也可以直接粘贴简历文本..."
-                />
+              </div>
+            </section>
+
+            <section className="jd-panel">
+              <div className="jd-panel-header">
+                <h2>历史记录</h2>
+                <span>{savedReports.length}</span>
               </div>
 
-              <div className="jd-submit-row">
-                {!aiReady && (
-                  <Button type="button" variant="secondary" onClick={() => setSettingsOpen(true)}>
-                    配置 AI
-                  </Button>
+              <div className="jd-history-list">
+                {savedReports.length === 0 ? (
+                  <p className="jd-history-empty">暂无诊断记录</p>
+                ) : (
+                  savedReports.map((item) => (
+                    <div
+                      key={item.id}
+                      className="jd-history-item"
+                      data-active={activeReportId === item.id}
+                    >
+                      <button
+                        type="button"
+                        disabled={analyzing}
+                        onClick={() => handleSelectReport(item)}
+                      >
+                        <strong>{item.title}</strong>
+                        <span>
+                          {item.roleTitle} · {formatDateTime(item.updatedAt)}
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        aria-label={`删除 ${item.title}`}
+                        disabled={analyzing}
+                        onClick={() => handleDeleteReport(item.id)}
+                      >
+                        删除
+                      </button>
+                    </div>
+                  ))
                 )}
-                <Button
-                  type="button"
-                  variant="primary"
-                  loading={analyzing}
-                  disabled={!jdText.trim() || !resumeText.trim()}
-                  onClick={handleAnalyze}
-                >
-                  生成诊断
-                </Button>
               </div>
-            </div>
-          </section>
+            </section>
+          </aside>
 
           <section className="jd-panel jd-report-panel">
             <div className="jd-panel-header">
@@ -335,6 +504,12 @@ export default function JdMatch() {
           grid-template-columns: 360px minmax(0, 1fr);
           gap: 16px;
           align-items: start;
+        }
+
+        .jd-sidebar {
+          display: grid;
+          gap: 14px;
+          min-width: 0;
         }
 
         .jd-panel {
@@ -494,6 +669,71 @@ export default function JdMatch() {
           font-size: 14px;
           color: var(--text);
           overflow-wrap: anywhere;
+        }
+
+        .jd-history-list {
+          display: grid;
+          gap: 8px;
+          min-width: 0;
+        }
+
+        .jd-history-empty {
+          font-size: 12px;
+          color: var(--text-3);
+        }
+
+        .jd-history-item {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          align-items: center;
+          gap: 8px;
+          min-width: 0;
+          border: 1px solid var(--border-subtle);
+          border-radius: 8px;
+          background: var(--surface-2);
+          padding: 9px;
+        }
+
+        .jd-history-item[data-active='true'] {
+          border-color: rgba(var(--primary-rgb), 0.32);
+          background: var(--primary-light);
+        }
+
+        .jd-history-item button {
+          border: none;
+          background: transparent;
+          cursor: pointer;
+        }
+
+        .jd-history-item button:first-child {
+          min-width: 0;
+          text-align: left;
+          color: var(--text);
+        }
+
+        .jd-history-item button:last-child {
+          color: var(--text-3);
+          font-size: 11px;
+          padding: 4px;
+        }
+
+        .jd-history-item strong,
+        .jd-history-item span {
+          display: block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .jd-history-item strong {
+          font-size: 12px;
+          color: var(--text);
+        }
+
+        .jd-history-item span {
+          margin-top: 3px;
+          font-size: 11px;
+          color: var(--text-3);
         }
 
         @media (max-width: 920px) {

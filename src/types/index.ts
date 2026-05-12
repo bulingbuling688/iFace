@@ -180,6 +180,19 @@ export interface MockInterviewSession {
   updatedAt: number
 }
 
+export interface JdMatchReport {
+  id: string
+  title: string
+  roleTitle: string
+  jdText: string
+  resumeText: string
+  resumeFileName?: string
+  markdown: string
+  model?: string
+  createdAt: number
+  updatedAt: number
+}
+
 // Static built-in list (for sidebar defaults when no custom modules are imported)
 export const MODULE_LIST: Module[] = [...BUILTIN_MODULES]
 

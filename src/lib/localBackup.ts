@@ -1,5 +1,6 @@
 import type { AIMessage, AISession } from '../store/useAIStore'
 import type {
+  JdMatchReport,
   MockInterviewSession,
   Question,
   QuestionFlag,
@@ -19,6 +20,7 @@ export interface ImportPreview {
   questionFlags: QuestionFlag[]
   aiSessions: AISession[]
   mockInterviews: MockInterviewSession[]
+  jdMatchReports: JdMatchReport[]
   customSources: string[]
   customCategories: CategoryMap
   impact: ImportImpact
@@ -31,6 +33,7 @@ export interface ImportImpact {
   questionFlags: ImportImpactItem
   aiSessions: ImportImpactItem
   mockInterviews: ImportImpactItem
+  jdMatchReports: ImportImpactItem
 }
 
 export interface ImportImpactItem {
@@ -191,6 +194,22 @@ function isMockInterviewSession(value: unknown): value is MockInterviewSession {
   )
 }
 
+function isJdMatchReport(value: unknown): value is JdMatchReport {
+  return (
+    isRecord(value) &&
+    typeof value.id === 'string' &&
+    typeof value.title === 'string' &&
+    typeof value.roleTitle === 'string' &&
+    typeof value.jdText === 'string' &&
+    typeof value.resumeText === 'string' &&
+    (value.resumeFileName === undefined || typeof value.resumeFileName === 'string') &&
+    typeof value.markdown === 'string' &&
+    (value.model === undefined || typeof value.model === 'string') &&
+    typeof value.createdAt === 'number' &&
+    typeof value.updatedAt === 'number'
+  )
+}
+
 function parseImportArray<T>(
   data: Record<string, unknown>,
   key:
@@ -199,7 +218,8 @@ function parseImportArray<T>(
     | 'questionNotes'
     | 'questionFlags'
     | 'aiSessions'
-    | 'mockInterviews',
+    | 'mockInterviews'
+    | 'jdMatchReports',
   guard: (value: unknown) => value is T,
   label: string,
 ): T[] {
@@ -316,6 +336,7 @@ export function parseImportPreview(fileName: string, rawText: string): ImportPre
     isMockInterviewSession,
     '模拟面试',
   )
+  const jdMatchReports = parseImportArray(parsed, 'jdMatchReports', isJdMatchReport, 'JD 诊断')
   const customSources = [
     ...new Set([
       ...parseStringArray(parsed, 'customSources', '自定义来源'),
@@ -333,7 +354,8 @@ export function parseImportPreview(fileName: string, rawText: string): ImportPre
       questionNotes.length +
       questionFlags.length +
       aiSessions.length +
-      mockInterviews.length ===
+      mockInterviews.length +
+      jdMatchReports.length ===
     0
   ) {
     throw new Error('备份中没有可导入的数据')
@@ -349,6 +371,7 @@ export function parseImportPreview(fileName: string, rawText: string): ImportPre
     questionFlags,
     aiSessions,
     mockInterviews,
+    jdMatchReports,
     customSources,
     customCategories,
     impact: {
@@ -358,6 +381,7 @@ export function parseImportPreview(fileName: string, rawText: string): ImportPre
       questionFlags: { created: 0, overwritten: 0 },
       aiSessions: { created: 0, overwritten: 0 },
       mockInterviews: { created: 0, overwritten: 0 },
+      jdMatchReports: { created: 0, overwritten: 0 },
     },
   }
 }

@@ -1,5 +1,6 @@
 import { type IDBPDatabase, openDB } from 'idb'
 import type {
+  JdMatchReport,
   MockInterviewSession,
   Question,
   QuestionFlag,
@@ -8,7 +9,7 @@ import type {
 } from '../types'
 
 const DB_NAME = 'iface_db'
-const DB_VERSION = 4
+const DB_VERSION = 5
 
 export const STORES = {
   QUESTIONS: 'questions',
@@ -16,6 +17,7 @@ export const STORES = {
   QUESTION_NOTES: 'question_notes',
   QUESTION_FLAGS: 'question_flags',
   MOCK_INTERVIEWS: 'mock_interviews',
+  JD_MATCH_REPORTS: 'jd_match_reports',
   META: 'meta',
 } as const
 
@@ -91,6 +93,14 @@ function getDB(): Promise<IDBPDatabase> {
           mockInterviews.createIndex('status', 'status', { unique: false })
           mockInterviews.createIndex('createdAt', 'createdAt', { unique: false })
           mockInterviews.createIndex('updatedAt', 'updatedAt', { unique: false })
+        }
+
+        if (!db.objectStoreNames.contains(STORES.JD_MATCH_REPORTS)) {
+          const jdMatchReports = db.createObjectStore(STORES.JD_MATCH_REPORTS, {
+            keyPath: 'id',
+          })
+          jdMatchReports.createIndex('createdAt', 'createdAt', { unique: false })
+          jdMatchReports.createIndex('updatedAt', 'updatedAt', { unique: false })
         }
 
         // Meta store (for tracking loaded modules, version, etc.)
@@ -341,6 +351,38 @@ export async function clearAllMockInterviews(): Promise<void> {
   await db.clear(STORES.MOCK_INTERVIEWS)
 }
 
+// ─── JD Match Reports ────────────────────────────────────────────────────────
+
+export async function getAllJdMatchReports(): Promise<JdMatchReport[]> {
+  const db = await getDB()
+  const reports = await db.getAll(STORES.JD_MATCH_REPORTS)
+  return reports.sort((a, b) => b.updatedAt - a.updatedAt)
+}
+
+export async function putJdMatchReport(report: JdMatchReport): Promise<void> {
+  const db = await getDB()
+  await db.put(STORES.JD_MATCH_REPORTS, {
+    ...report,
+    updatedAt: Date.now(),
+  })
+}
+
+export async function bulkPutJdMatchReports(reports: JdMatchReport[]): Promise<void> {
+  const db = await getDB()
+  const tx = db.transaction(STORES.JD_MATCH_REPORTS, 'readwrite')
+  await Promise.all([...reports.map((report) => tx.store.put(report)), tx.done])
+}
+
+export async function deleteJdMatchReport(id: string): Promise<void> {
+  const db = await getDB()
+  await db.delete(STORES.JD_MATCH_REPORTS, id)
+}
+
+export async function clearAllJdMatchReports(): Promise<void> {
+  const db = await getDB()
+  await db.clear(STORES.JD_MATCH_REPORTS)
+}
+
 // ─── Meta ─────────────────────────────────────────────────────────────────────
 
 export async function getMeta<T>(key: string): Promise<T | undefined> {
@@ -534,13 +576,14 @@ export async function removeCustomSource(source: string): Promise<void> {
 // ─── Export all data (for backup) ────────────────────────────────────────────
 
 export async function exportAllData(): Promise<{
-  formatVersion: 4
+  formatVersion: 5
   exportedAt: string
   questions: Question[]
   studyRecords: StudyRecord[]
   questionNotes: QuestionNote[]
   questionFlags: QuestionFlag[]
   mockInterviews: MockInterviewSession[]
+  jdMatchReports: JdMatchReport[]
   customSources: string[]
   customCategories: CategoryMap
 }> {
@@ -550,6 +593,7 @@ export async function exportAllData(): Promise<{
     questionNotes,
     questionFlags,
     mockInterviews,
+    jdMatchReports,
     customSources,
     categoryMap,
   ] = await Promise.all([
@@ -558,6 +602,7 @@ export async function exportAllData(): Promise<{
     getAllQuestionNotes(),
     getAllQuestionFlags(),
     getAllMockInterviews(),
+    getAllJdMatchReports(),
     getCustomSources(),
     getCategoryMap(),
   ])
@@ -567,13 +612,14 @@ export async function exportAllData(): Promise<{
   }
 
   return {
-    formatVersion: 4,
+    formatVersion: 5,
     exportedAt: new Date().toISOString(),
     questions,
     studyRecords,
     questionNotes,
     questionFlags,
     mockInterviews,
+    jdMatchReports,
     customSources,
     customCategories,
   }
@@ -589,6 +635,7 @@ export async function resetDatabase(): Promise<void> {
     db.clear(STORES.QUESTION_NOTES),
     db.clear(STORES.QUESTION_FLAGS),
     db.clear(STORES.MOCK_INTERVIEWS),
+    db.clear(STORES.JD_MATCH_REPORTS),
     db.clear(STORES.META),
   ])
   dbPromise = null
