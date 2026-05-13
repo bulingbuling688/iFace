@@ -636,7 +636,7 @@ function PastePanel({
           style={{
             borderRadius: 10,
             fontFamily: 'var(--font-mono)',
-            fontSize: 12,
+            fontSize: 'var(--control-font-size)',
             background: 'var(--surface-2)',
             resize: 'vertical',
             minHeight: 180,

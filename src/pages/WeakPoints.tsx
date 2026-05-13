@@ -652,7 +652,7 @@ export default function WeakPoints() {
                 value={sortMode}
                 onChange={(e) => setSortMode(e.target.value as SortMode)}
                 style={{
-                  fontSize: 13,
+                  fontSize: 'var(--control-font-size)',
                   padding: '6px 10px',
                   borderRadius: 8,
                   background: 'var(--surface)',

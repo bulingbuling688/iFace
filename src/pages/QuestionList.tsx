@@ -1495,7 +1495,7 @@ export default function QuestionList() {
               flexShrink: 0,
               padding: '6px 12px',
               borderRadius: 8,
-              fontSize: 13,
+              fontSize: 'var(--control-font-size)',
               whiteSpace: 'nowrap',
               border: '1px solid var(--border)',
               color: 'var(--text-2)',
@@ -1540,7 +1540,7 @@ export default function QuestionList() {
             value={sort}
             onChange={(e) => handleSortChange(e.target.value)}
             style={{
-              fontSize: 13,
+              fontSize: 'var(--control-font-size)',
               padding: '6px 10px',
               borderRadius: 8,
               background: 'var(--surface)',

@@ -115,7 +115,7 @@ function TextInput({
         background: 'var(--surface)',
         color: 'var(--text)',
         padding: '0 12px',
-        fontSize: 13,
+        fontSize: 'var(--control-font-size)',
         outline: 'none',
       }}
     />
@@ -145,7 +145,7 @@ function SelectInput<T extends string>({
         background: 'var(--surface)',
         color: 'var(--text)',
         padding: '0 10px',
-        fontSize: 13,
+        fontSize: 'var(--control-font-size)',
         outline: 'none',
       }}
     >
@@ -182,7 +182,7 @@ function TextArea({
         background: 'var(--surface)',
         color: 'var(--text)',
         padding: '10px 12px',
-        fontSize: 13,
+        fontSize: 'var(--control-font-size)',
         lineHeight: 1.6,
         resize: 'vertical',
         outline: 'none',
@@ -1267,7 +1267,7 @@ export default function MockInterview() {
           background: var(--surface);
           color: var(--text);
           padding: 0 10px;
-          font-size: 13px;
+          font-size: var(--control-font-size);
           outline: none;
         }
 
@@ -1482,7 +1482,7 @@ export default function MockInterview() {
           background: var(--surface);
           color: var(--text);
           padding: 12px;
-          font-size: 14px;
+          font-size: var(--control-font-size);
           line-height: 1.7;
           resize: vertical;
           outline: none;

@@ -594,7 +594,7 @@ export default function AITool() {
           border-radius: 8px;
           background: var(--surface);
           color: var(--text);
-          font-size: 13px;
+          font-size: var(--control-font-size);
           line-height: 1.55;
           padding: 10px 12px;
           outline: none;

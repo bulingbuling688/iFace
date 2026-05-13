@@ -90,7 +90,7 @@ function TextArea({
         background: 'var(--surface)',
         color: 'var(--text)',
         padding: '10px 12px',
-        fontSize: 13,
+        fontSize: 'var(--control-font-size)',
         lineHeight: 1.6,
         resize: 'vertical',
         outline: 'none',
@@ -595,7 +595,7 @@ export default function JdMatch() {
           background: var(--surface);
           color: var(--text);
           padding: 0 12px;
-          font-size: 13px;
+          font-size: var(--control-font-size);
           outline: none;
         }
 

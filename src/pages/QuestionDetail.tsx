@@ -893,7 +893,7 @@ function MyAnswerInput({
             border: compact ? '1px dashed var(--border)' : 'none',
             borderRadius: compact ? 10 : 0,
             color: 'var(--text-3)',
-            fontSize: 13,
+            fontSize: 'var(--control-font-size)',
             cursor: 'pointer',
             transition: 'all 0.15s',
             textAlign: 'left',
@@ -942,7 +942,7 @@ function MyAnswerInput({
       >
         <span
           style={{
-            fontSize: 13,
+            fontSize: 'var(--control-font-size)',
             fontWeight: 600,
             color: 'var(--text)',
             display: 'flex',
@@ -1043,7 +1043,7 @@ function MyAnswerInput({
                 border: 'none',
                 outline: 'none',
                 color: 'var(--text)',
-                fontSize: 13,
+                fontSize: 'var(--control-font-size)',
                 lineHeight: 1.6,
                 resize: 'vertical',
                 minHeight: 72,

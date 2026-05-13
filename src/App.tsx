@@ -1,8 +1,10 @@
 import { lazy, Suspense, useEffect, useLayoutEffect } from 'react'
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { Navbar } from '@/components/layout/Navbar'
 import { Spinner } from '@/components/ui'
+import { AppErrorBoundary } from '@/components/ui/AppErrorBoundary'
 import { PWAUpdatePrompt } from '@/components/ui/PWAUpdatePrompt'
+import { installAppRecoveryHandlers } from '@/lib/appRecovery'
 import { routeLoaders } from '@/lib/routePreload'
 
 const Dashboard = lazy(routeLoaders.dashboard)
@@ -49,6 +51,16 @@ function ApiAuthFallback() {
   return <PageLoader />
 }
 
+function AppRecoveryHandlers() {
+  useEffect(() => installAppRecoveryHandlers(), [])
+  return null
+}
+
+function QuestionDetailRoute() {
+  const { id } = useParams()
+  return <QuestionDetail key={id ?? 'question'} />
+}
+
 function ScrollToTop() {
   const { pathname } = useLocation()
 
@@ -71,31 +83,43 @@ function ScrollToTop() {
   return null
 }
 
+function AppRoutes() {
+  const location = useLocation()
+  const resetKey = `${location.pathname}${location.search}`
+
+  return (
+    <AppErrorBoundary resetKey={resetKey}>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* Defensive catch for the OAuth callback path in case the
+              Service Worker serves the SPA shell for /api/auth */}
+          <Route path="/api/auth" element={<ApiAuthFallback />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/questions" element={<QuestionList />} />
+          <Route path="/questions/:id" element={<QuestionDetailRoute />} />
+          <Route path="/practice" element={<Practice />} />
+          <Route path="/mock-interview" element={<MockInterview />} />
+          <Route path="/weak" element={<WeakPoints />} />
+          <Route path="/tools" element={<Tools />} />
+          <Route path="/tools/jd-match" element={<JdMatch />} />
+          <Route path="/tools/:toolId" element={<AITool />} />
+          <Route path="/import" element={<ImportPage />} />
+          <Route path="/prompt" element={<PromptPage />} />
+        </Routes>
+      </Suspense>
+    </AppErrorBoundary>
+  )
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <div className="min-h-dvh bg-[var(--surface)]">
+        <AppRecoveryHandlers />
         <ScrollToTop />
         <Navbar />
         <main>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              {/* Defensive catch for the OAuth callback path in case the
-							    Service Worker serves the SPA shell for /api/auth */}
-              <Route path="/api/auth" element={<ApiAuthFallback />} />
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/questions" element={<QuestionList />} />
-              <Route path="/questions/:id" element={<QuestionDetail />} />
-              <Route path="/practice" element={<Practice />} />
-              <Route path="/mock-interview" element={<MockInterview />} />
-              <Route path="/weak" element={<WeakPoints />} />
-              <Route path="/tools" element={<Tools />} />
-              <Route path="/tools/jd-match" element={<JdMatch />} />
-              <Route path="/tools/:toolId" element={<AITool />} />
-              <Route path="/import" element={<ImportPage />} />
-              <Route path="/prompt" element={<PromptPage />} />
-            </Routes>
-          </Suspense>
+          <AppRoutes />
         </main>
         <PWAUpdatePrompt />
       </div>

@@ -1950,7 +1950,7 @@ export function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
                     style={{
                       resize: 'vertical',
                       fontFamily: 'var(--font-mono)',
-                      fontSize: 13,
+                      fontSize: 'var(--control-font-size)',
                       lineHeight: 1.6,
                       minHeight: 140,
                       maxHeight: 320,

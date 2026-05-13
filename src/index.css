@@ -9,6 +9,7 @@
   --font-display:
     -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "SF Mono", ui-monospace, "Cascadia Code", "Fira Code", Menlo, Courier, monospace;
+  --control-font-size: 13px;
 
   /* Brand */
   --primary: #6366f1;
@@ -674,6 +675,18 @@ body {
 .input-base:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+@supports (-webkit-touch-callout: none) {
+  :root {
+    --control-font-size: 16px;
+  }
+
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
 }
 
 /* ─── Transition helpers ────────────────────────────────────────────────────── */
