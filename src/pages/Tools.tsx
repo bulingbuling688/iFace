@@ -4,12 +4,12 @@ interface ToolCard {
   title: string
   description: string
   href: string
-  icon: 'interview' | 'match' | 'prompt'
+  icon: 'interview' | 'match' | 'prompt' | 'project' | 'questions' | 'review' | 'intro' | 'plan'
 }
 
 const toolSections: { title: string; tools: ToolCard[] }[] = [
   {
-    title: '面试辅助',
+    title: '面试核心',
     tools: [
       {
         title: '模拟面试',
@@ -22,6 +22,46 @@ const toolSections: { title: string; tools: ToolCard[] }[] = [
         description: '对照目标岗位，找出简历里的匹配点、风险点和可能追问。',
         href: '/tools/jd-match',
         icon: 'match',
+      },
+    ],
+  },
+  {
+    title: '准备打磨',
+    tools: [
+      {
+        title: '项目深挖',
+        description: '拆解项目亮点、技术难点、追问清单和口语化回答。',
+        href: '/tools/project-deep-dive',
+        icon: 'project',
+      },
+      {
+        title: '面试问题',
+        description: '基于简历、JD 或项目关键词预测这场面试的高概率问题。',
+        href: '/tools/interview-questions',
+        icon: 'questions',
+      },
+      {
+        title: '自我介绍',
+        description: '生成 30 秒、1 分钟、2 分钟中文面试自我介绍。',
+        href: '/tools/self-intro',
+        icon: 'intro',
+      },
+    ],
+  },
+  {
+    title: '复盘提升',
+    tools: [
+      {
+        title: '复盘解析',
+        description: '把面试记录转成失分点、补强项和下一轮练习清单。',
+        href: '/tools/review-analysis',
+        icon: 'review',
+      },
+      {
+        title: '学习计划',
+        description: '按薄弱点、面试日期和可投入时间生成补强路径。',
+        href: '/tools/learning-plan',
+        icon: 'plan',
       },
     ],
   },
@@ -55,6 +95,62 @@ function ToolIcon({ type }: { type: ToolCard['icon'] }) {
         <path d="m6 8 4 4-4 4" />
         <path d="M12 16h6" />
         <rect x="3" y="4" width="18" height="16" rx="3" />
+      </svg>
+    )
+  }
+
+  if (type === 'project') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 7.5h6l2 2h8v8.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" />
+        <path d="M4 7.5V6a2 2 0 0 1 2-2h3.5l2 2H18a2 2 0 0 1 2 2v1.5" />
+        <path d="M9 14h6" />
+        <path d="M9 17h4" />
+      </svg>
+    )
+  }
+
+  if (type === 'questions') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M9.8 9.2a2.4 2.4 0 0 1 4.6 1c0 1.8-2.4 2.1-2.4 3.8" />
+        <path d="M12 17h.01" />
+      </svg>
+    )
+  }
+
+  if (type === 'review') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M9 4h6l1 2h3v14H5V6h3z" />
+        <path d="M9 11h6" />
+        <path d="M9 15h3" />
+        <path d="m15 16 1.5 1.5L20 14" />
+      </svg>
+    )
+  }
+
+  if (type === 'intro') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="9" cy="8" r="3" />
+        <path d="M4 19a5 5 0 0 1 10 0" />
+        <path d="M16 7h4" />
+        <path d="M16 11h5" />
+        <path d="M16 15h3" />
+      </svg>
+    )
+  }
+
+  if (type === 'plan') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="4" y="5" width="16" height="16" rx="2" />
+        <path d="M8 3v4" />
+        <path d="M16 3v4" />
+        <path d="M4 10h16" />
+        <path d="m8 15 2 2 4-4" />
       </svg>
     )
   }
