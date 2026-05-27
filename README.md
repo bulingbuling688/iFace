@@ -15,7 +15,7 @@
 
 ---
 
-## 预览
+## 👀 预览
 
 https://face.dogxi.me
 
@@ -27,30 +27,27 @@ https://face.dogxi.me
   <img src="docs/screenshots/settings.png" alt="设置面板" width="49%" />
 </div>
 
----
 
-## 简介
+## 📚 简介
 
-iFace 是一款专为 前端/Agent 工程师备战技术面试打造的本地刷题工具。题库、进度、AI 对话全部存储在浏览器本地，无需注册、无需服务器，打开即用。
+iFace 是一款专为 前端/Agent/Golang 等工程师备战技术面试打造的本地刷题工具。题库、进度、AI 对话全部存储在浏览器本地，无需注册、无需服务器，打开即用。
 
 **核心理念：** 不只是背题，而是真正理解——通过 AI 教练辅助、进度追踪和薄弱点分析，帮助你在面试中清晰表达。
 
----
 
-## 功能特性
+## ⚡️ 功能特性
 
 - 题库管理：内置高频题库，支持自定义导入
 - 智能刷题：按模块、难度、状态灵活练习
 - AI 面试教练：辅助拆题、复盘、追问和模拟面试
 - 数据与进度：本地保存进度，支持导入导出和备份
 
----
 
-## 线上版本
+## 🚀 快速开始
 
 https://face.dogxi.me
 
-支持 GitHub 登陆备份数据。
+线上版本，实时更新，支持 GitHub 登陆备份数据。
 
 ## 本地运行
 
@@ -68,9 +65,7 @@ bun dev
 
 访问 [http://localhost:5173](http://localhost:5173)
 
----
-
-## 使用指南
+## 🧭 使用指南
 
 ### 导入题库
 
@@ -114,7 +109,7 @@ bun dev
 
 ---
 
-## 项目 Star 历史
+## 📈 项目 Star 历史
 
 <a href="https://www.star-history.com/?repos=dogxii%2Fiface&type=date&legend=top-left">
  <picture>
@@ -124,8 +119,6 @@ bun dev
  </picture>
 </a>
 
----
-
-## License
+## 🪪 License
 
 [MIT](LICENSE) © 2026 Dogxi
