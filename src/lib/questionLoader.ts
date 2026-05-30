@@ -86,7 +86,6 @@ export const BUILTIN_CATEGORIES: readonly BuiltinCategory[] = [
     category: 'Java',
     files: [
       'java/basics.json',
-      'java/oop.json',
       'java/concurrency.json',
       'java/jvm.json',
       'java/spring.json',
@@ -99,7 +98,7 @@ export const BUILTIN_CATEGORIES: readonly BuiltinCategory[] = [
 
 /** Flat list of every built-in file path across all categories (for legacy compat). */
 export const BUILTIN_MODULE_FILES: readonly string[] = BUILTIN_CATEGORIES.flatMap((c) => c.files)
-export const BUILTIN_QUESTIONS_VERSION = '0.17.0'
+export const BUILTIN_QUESTIONS_VERSION = '0.18.0'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

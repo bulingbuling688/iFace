@@ -1,6 +1,6 @@
 [
   {
-    "id": "redis-basics-001",
+    "id": "java-redis-001",
     "module": "Redis",
     "difficulty": 1,
     "question": "Redis 为什么快，单线程事件循环和 I/O 多路复用如何配合？",
@@ -9,7 +9,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-basics-002",
+    "id": "java-redis-002",
     "module": "Redis",
     "difficulty": 1,
     "question": "Redis 6+ 多线程主要优化什么，为什么命令执行仍强调单线程模型？",
@@ -18,7 +18,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-basics-003",
+    "id": "java-redis-003",
     "module": "Redis",
     "difficulty": 1,
     "question": "String、Hash、List、Set、Sorted Set 如何根据业务场景选择？",
@@ -27,7 +27,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-basics-004",
+    "id": "java-redis-004",
     "module": "Redis",
     "difficulty": 1,
     "question": "Bitmap、HyperLogLog、Geo、Stream 分别适合什么问题？",
@@ -36,7 +36,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-basics-005",
+    "id": "java-redis-005",
     "module": "Redis",
     "difficulty": 2,
     "question": "Redis 底层编码与数据类型如何对应？",
@@ -45,7 +45,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-basics-006",
+    "id": "java-redis-006",
     "module": "Redis",
     "difficulty": 2,
     "question": "Hash 为什么推荐 HSET 多字段写入替代旧 HMSET？",
@@ -54,7 +54,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-basics-007",
+    "id": "java-redis-007",
     "module": "Redis",
     "difficulty": 2,
     "question": "List、Stream、Pub/Sub 作为消息模型有什么差异？",
@@ -63,7 +63,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-basics-008",
+    "id": "java-redis-008",
     "module": "Redis",
     "difficulty": 2,
     "question": "Sorted Set 为什么适合排行榜和延迟队列，复杂度如何评估？",
@@ -72,7 +72,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-basics-009",
+    "id": "java-redis-009",
     "module": "Redis",
     "difficulty": 2,
     "question": "SCAN 系列命令与 KEYS/HGETALL 如何取舍？",
@@ -81,7 +81,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-basics-010",
+    "id": "java-redis-010",
     "module": "Redis",
     "difficulty": 2,
     "question": "Lua 脚本和 Redis Function 的原子性来自哪里，风险在哪里？",
@@ -90,7 +90,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-basics-011",
+    "id": "java-redis-011",
     "module": "Redis",
     "difficulty": 3,
     "question": "Pipeline、事务 MULTI/EXEC、WATCH 分别解决什么问题？",
@@ -99,7 +99,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-basics-012",
+    "id": "java-redis-012",
     "module": "Redis",
     "difficulty": 3,
     "question": "Redis key 命名、过期时间和大 key 设计有哪些规范？",
@@ -108,7 +108,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-basics-013",
+    "id": "java-redis-013",
     "module": "Redis",
     "difficulty": 3,
     "question": "Redis 模块生态（Bloom、JSON、Search、TimeSeries）适合哪些场景？",
@@ -117,7 +117,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-basics-014",
+    "id": "java-redis-014",
     "module": "Redis",
     "difficulty": 3,
     "question": "如何从内存占用和访问复杂度角度选择数据结构？",
@@ -126,7 +126,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-cache-001",
+    "id": "java-redis-015",
     "module": "Redis",
     "difficulty": 1,
     "question": "缓存旁路、读写穿透、写回、写直达分别如何工作？",
@@ -135,7 +135,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-cache-002",
+    "id": "java-redis-016",
     "module": "Redis",
     "difficulty": 1,
     "question": "缓存穿透、击穿、雪崩分别是什么，如何防御？",
@@ -144,7 +144,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-cache-003",
+    "id": "java-redis-017",
     "module": "Redis",
     "difficulty": 1,
     "question": "布隆过滤器、空值缓存和互斥重建分别适合什么场景？",
@@ -153,7 +153,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-cache-004",
+    "id": "java-redis-018",
     "module": "Redis",
     "difficulty": 1,
     "question": "缓存与数据库双写不一致的根源是什么，常见解决方案如何取舍？",
@@ -162,7 +162,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-cache-005",
+    "id": "java-redis-019",
     "module": "Redis",
     "difficulty": 2,
     "question": "延迟双删、订阅 binlog、消息队列和本地事务消息如何保证最终一致？",
@@ -171,7 +171,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-cache-006",
+    "id": "java-redis-020",
     "module": "Redis",
     "difficulty": 2,
     "question": "热点 key 如何发现、拆分、复制和本地缓存降级？",
@@ -180,7 +180,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-cache-007",
+    "id": "java-redis-021",
     "module": "Redis",
     "difficulty": 2,
     "question": "大 key 会造成哪些阻塞和网络问题，如何拆分和迁移？",
@@ -189,7 +189,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-cache-008",
+    "id": "java-redis-022",
     "module": "Redis",
     "difficulty": 2,
     "question": "缓存预热、缓存降级和熔断在上线和故障时如何设计？",
@@ -198,7 +198,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-cache-009",
+    "id": "java-redis-023",
     "module": "Redis",
     "difficulty": 2,
     "question": "TTL 随机化、逻辑过期和后台刷新如何降低峰值风险？",
@@ -207,7 +207,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-cache-010",
+    "id": "java-redis-024",
     "module": "Redis",
     "difficulty": 3,
     "question": "多级缓存中本地缓存、Redis、CDN 的一致性如何处理？",
@@ -216,7 +216,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-cache-011",
+    "id": "java-redis-025",
     "module": "Redis",
     "difficulty": 3,
     "question": "缓存命中率、穿透率、重建耗时应该如何监控？",
@@ -225,7 +225,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-cache-012",
+    "id": "java-redis-026",
     "module": "Redis",
     "difficulty": 3,
     "question": "商品详情缓存如何兼顾高可用、一致性和热点保护？",
@@ -234,7 +234,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ha-001",
+    "id": "java-redis-027",
     "module": "Redis",
     "difficulty": 2,
     "question": "RDB、AOF 和混合持久化各自的恢复速度和数据安全性如何取舍？",
@@ -243,7 +243,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ha-002",
+    "id": "java-redis-028",
     "module": "Redis",
     "difficulty": 2,
     "question": "BGSAVE、BGREWRITEAOF 与 fork/COW 会带来哪些资源风险？",
@@ -252,7 +252,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ha-003",
+    "id": "java-redis-029",
     "module": "Redis",
     "difficulty": 2,
     "question": "appendfsync always/everysec/no 如何影响性能和丢数据窗口？",
@@ -261,7 +261,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ha-004",
+    "id": "java-redis-030",
     "module": "Redis",
     "difficulty": 2,
     "question": "Redis 重启时如何选择 RDB/AOF 文件恢复数据？",
@@ -270,7 +270,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ha-005",
+    "id": "java-redis-031",
     "module": "Redis",
     "difficulty": 2,
     "question": "主从复制全量同步、增量同步和 repl_backlog 如何工作？",
@@ -279,7 +279,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ha-006",
+    "id": "java-redis-032",
     "module": "Redis",
     "difficulty": 2,
     "question": "复制积压、网络抖动和从库加载 RDB 会造成什么风险？",
@@ -288,7 +288,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ha-007",
+    "id": "java-redis-033",
     "module": "Redis",
     "difficulty": 3,
     "question": "Sentinel 的监控、主观下线、客观下线和故障转移流程是什么？",
@@ -297,7 +297,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ha-008",
+    "id": "java-redis-034",
     "module": "Redis",
     "difficulty": 3,
     "question": "Sentinel 如何选主，如何避免脑裂和错误切换？",
@@ -306,7 +306,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ha-009",
+    "id": "java-redis-035",
     "module": "Redis",
     "difficulty": 3,
     "question": "Redis Cluster 的 16384 槽、MOVED、ASK 和客户端缓存如何工作？",
@@ -315,7 +315,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ha-010",
+    "id": "java-redis-036",
     "module": "Redis",
     "difficulty": 3,
     "question": "Cluster 扩缩容、resharding 和 slot 迁移如何保证可用性？",
@@ -324,7 +324,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ha-011",
+    "id": "java-redis-037",
     "module": "Redis",
     "difficulty": 3,
     "question": "Redis 高可用架构中哨兵、Cluster、代理模式如何选择？",
@@ -333,7 +333,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ha-012",
+    "id": "java-redis-038",
     "module": "Redis",
     "difficulty": 3,
     "question": "Redis 备份、恢复演练和跨机房灾备应如何设计？",
@@ -342,7 +342,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-dist-001",
+    "id": "java-redis-039",
     "module": "Redis",
     "difficulty": 2,
     "question": "SET NX PX 实现分布式锁有哪些必要条件和缺陷？",
@@ -351,7 +351,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-dist-002",
+    "id": "java-redis-040",
     "module": "Redis",
     "difficulty": 2,
     "question": "Redlock 的假设、争议和适用边界是什么？",
@@ -360,7 +360,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-dist-003",
+    "id": "java-redis-041",
     "module": "Redis",
     "difficulty": 2,
     "question": "如何用 Lua 实现安全释放锁和锁续期？",
@@ -369,7 +369,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-dist-004",
+    "id": "java-redis-042",
     "module": "Redis",
     "difficulty": 2,
     "question": "令牌桶、漏桶、固定窗口、滑动窗口限流如何用 Redis 实现？",
@@ -378,7 +378,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-dist-005",
+    "id": "java-redis-043",
     "module": "Redis",
     "difficulty": 2,
     "question": "ZSet 延迟队列有哪些可靠性问题，如何避免任务丢失和重复执行？",
@@ -387,7 +387,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-dist-006",
+    "id": "java-redis-044",
     "module": "Redis",
     "difficulty": 3,
     "question": "Stream 消费者组、pending list 和 ack 机制如何实现可靠消费？",
@@ -396,7 +396,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-dist-007",
+    "id": "java-redis-045",
     "module": "Redis",
     "difficulty": 3,
     "question": "Redis 如何实现排行榜分页、同分排序和历史榜单归档？",
@@ -405,7 +405,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-dist-008",
+    "id": "java-redis-046",
     "module": "Redis",
     "difficulty": 3,
     "question": "Geo 附近搜索为什么推荐 GEOSEARCH 替代旧 GEORADIUS？",
@@ -414,7 +414,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-dist-009",
+    "id": "java-redis-047",
     "module": "Redis",
     "difficulty": 3,
     "question": "发布订阅、Stream 和消息队列系统的可靠性差异是什么？",
@@ -423,7 +423,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-dist-010",
+    "id": "java-redis-048",
     "module": "Redis",
     "difficulty": 3,
     "question": "Redis 在秒杀、库存、会话、验证码等场景下如何设计原子操作？",
@@ -432,7 +432,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ops-001",
+    "id": "java-redis-049",
     "module": "Redis",
     "difficulty": 2,
     "question": "Redis 慢查询、LATENCY、MONITOR、INFO 分别用于排查什么问题？",
@@ -441,7 +441,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ops-002",
+    "id": "java-redis-050",
     "module": "Redis",
     "difficulty": 2,
     "question": "Redis 内存碎片和主动整理如何处理？",
@@ -450,7 +450,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ops-003",
+    "id": "java-redis-051",
     "module": "Redis",
     "difficulty": 2,
     "question": "maxmemory 与 LRU、LFU、TTL 淘汰策略如何选择？",
@@ -459,7 +459,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ops-004",
+    "id": "java-redis-052",
     "module": "Redis",
     "difficulty": 2,
     "question": "为什么禁止在生产使用 KEYS、FLUSHALL、大范围删除等危险操作？",
@@ -468,7 +468,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ops-005",
+    "id": "java-redis-053",
     "module": "Redis",
     "difficulty": 2,
     "question": "DEL、UNLINK、lazyfree 在删除大 key 时有什么区别？",
@@ -477,7 +477,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ops-006",
+    "id": "java-redis-054",
     "module": "Redis",
     "difficulty": 2,
     "question": "连接数、客户端缓冲区、输出缓冲区膨胀如何影响稳定性？",
@@ -486,7 +486,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ops-007",
+    "id": "java-redis-055",
     "module": "Redis",
     "difficulty": 3,
     "question": "Redis CPU 飙高可能由哪些命令、数据结构或网络因素导致？",
@@ -495,7 +495,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ops-008",
+    "id": "java-redis-056",
     "module": "Redis",
     "difficulty": 3,
     "question": "Redis 集群热点槽、倾斜数据和跨 slot 操作如何治理？",
@@ -504,7 +504,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ops-009",
+    "id": "java-redis-057",
     "module": "Redis",
     "difficulty": 3,
     "question": "Redis 监控告警应覆盖哪些核心指标和阈值？",
@@ -513,7 +513,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ops-010",
+    "id": "java-redis-058",
     "module": "Redis",
     "difficulty": 3,
     "question": "Redis 版本升级、参数变更和数据迁移如何安全实施？",
@@ -522,7 +522,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ops-011",
+    "id": "java-redis-059",
     "module": "Redis",
     "difficulty": 3,
     "question": "Redis 安全配置应覆盖哪些方面？",
@@ -531,7 +531,7 @@
     "source": "精选"
   },
   {
-    "id": "redis-ops-012",
+    "id": "java-redis-060",
     "module": "Redis",
     "difficulty": 3,
     "question": "Redis 容量规划如何估算内存、QPS、带宽和副本成本？",

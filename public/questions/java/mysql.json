@@ -1,6 +1,6 @@
 [
   {
-    "id": "mysql-basics-001",
+    "id": "java-mysql-001",
     "module": "MySQL",
     "difficulty": 1,
     "question": "MySQL 字段类型如何按范围、精度和索引成本选型？",
@@ -9,7 +9,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-basics-002",
+    "id": "java-mysql-002",
     "module": "MySQL",
     "difficulty": 1,
     "question": "表设计中主键、唯一键、外键和约束如何取舍？",
@@ -18,7 +18,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-basics-003",
+    "id": "java-mysql-003",
     "module": "MySQL",
     "difficulty": 1,
     "question": "三范式和反范式分别解决什么问题，什么时候应该冗余字段？",
@@ -27,7 +27,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-basics-004",
+    "id": "java-mysql-004",
     "module": "MySQL",
     "difficulty": 1,
     "question": "NULL、默认值、空字符串和三值逻辑会带来哪些坑？",
@@ -36,7 +36,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-basics-005",
+    "id": "java-mysql-005",
     "module": "MySQL",
     "difficulty": 1,
     "question": "INNER、LEFT、RIGHT、SEMI JOIN 在结果集和执行上如何差异？",
@@ -45,7 +45,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-basics-006",
+    "id": "java-mysql-006",
     "module": "MySQL",
     "difficulty": 1,
     "question": "GROUP BY、HAVING、窗口函数和聚合函数如何正确使用？",
@@ -54,7 +54,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-basics-007",
+    "id": "java-mysql-007",
     "module": "MySQL",
     "difficulty": 1,
     "question": "分页查询为什么需要稳定排序，深分页如何优化？",
@@ -63,7 +63,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-basics-008",
+    "id": "java-mysql-008",
     "module": "MySQL",
     "difficulty": 2,
     "question": "慢查询中的 SELECT *、隐式转换、函数索引失效有哪些风险？",
@@ -72,7 +72,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-basics-009",
+    "id": "java-mysql-009",
     "module": "MySQL",
     "difficulty": 2,
     "question": "字符集、排序规则和大小写敏感如何影响查询和唯一约束？",
@@ -81,7 +81,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-basics-010",
+    "id": "java-mysql-010",
     "module": "MySQL",
     "difficulty": 2,
     "question": "如何设计审计字段、软删除、多租户和时间分区字段？",
@@ -90,7 +90,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-001",
+    "id": "java-mysql-011",
     "module": "MySQL",
     "difficulty": 1,
     "question": "InnoDB 聚簇索引和二级索引的存储结构是什么？",
@@ -99,7 +99,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-002",
+    "id": "java-mysql-012",
     "module": "MySQL",
     "difficulty": 1,
     "question": "为什么 InnoDB 表必须重视主键选择，UUID 和自增主键各有什么影响？",
@@ -108,7 +108,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-003",
+    "id": "java-mysql-013",
     "module": "MySQL",
     "difficulty": 1,
     "question": "B+ 树索引为什么适合范围查询，和 Hash 索引有什么区别？",
@@ -117,7 +117,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-004",
+    "id": "java-mysql-014",
     "module": "MySQL",
     "difficulty": 1,
     "question": "联合索引的最左前缀、范围截断和索引下推如何理解？",
@@ -126,7 +126,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-005",
+    "id": "java-mysql-015",
     "module": "MySQL",
     "difficulty": 1,
     "question": "覆盖索引、回表、索引条件下推分别如何影响性能？",
@@ -135,7 +135,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-006",
+    "id": "java-mysql-016",
     "module": "MySQL",
     "difficulty": 2,
     "question": "MySQL 优化器如何根据基数、成本和统计信息选择执行计划？",
@@ -144,7 +144,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-007",
+    "id": "java-mysql-017",
     "module": "MySQL",
     "difficulty": 2,
     "question": "EXPLAIN 的 type、key、rows、filtered、Extra 如何解读？",
@@ -153,7 +153,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-008",
+    "id": "java-mysql-018",
     "module": "MySQL",
     "difficulty": 2,
     "question": "EXPLAIN Extra 中常见标记意味着什么？",
@@ -162,7 +162,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-009",
+    "id": "java-mysql-019",
     "module": "MySQL",
     "difficulty": 2,
     "question": "ORDER BY、GROUP BY 如何利用索引避免排序和临时表？",
@@ -171,7 +171,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-010",
+    "id": "java-mysql-020",
     "module": "MySQL",
     "difficulty": 2,
     "question": "LIKE、前缀索引、全文索引和倒排索引分别适合什么搜索场景？",
@@ -180,7 +180,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-011",
+    "id": "java-mysql-021",
     "module": "MySQL",
     "difficulty": 2,
     "question": "索引过多会带来哪些写入、空间和优化器成本问题？",
@@ -189,7 +189,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-012",
+    "id": "java-mysql-022",
     "module": "MySQL",
     "difficulty": 2,
     "question": "索引失效的常见原因有哪些，如何系统排查？",
@@ -198,7 +198,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-013",
+    "id": "java-mysql-023",
     "module": "MySQL",
     "difficulty": 3,
     "question": "函数索引、生成列和 JSON 索引适合解决什么问题？",
@@ -207,7 +207,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-014",
+    "id": "java-mysql-024",
     "module": "MySQL",
     "difficulty": 3,
     "question": "唯一索引如何参与并发控制和业务幂等？",
@@ -216,7 +216,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-015",
+    "id": "java-mysql-025",
     "module": "MySQL",
     "difficulty": 3,
     "question": "高频查询的索引评审应检查哪些维度？",
@@ -225,7 +225,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-index-016",
+    "id": "java-mysql-026",
     "module": "MySQL",
     "difficulty": 3,
     "question": "下线无用索引前如何验证使用情况和回滚方案？",
@@ -234,7 +234,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-001",
+    "id": "java-mysql-027",
     "module": "MySQL",
     "difficulty": 2,
     "question": "ACID 四个特性在 InnoDB 中分别由什么机制保障？",
@@ -243,7 +243,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-002",
+    "id": "java-mysql-028",
     "module": "MySQL",
     "difficulty": 2,
     "question": "MySQL 四种隔离级别分别会出现哪些并发现象？",
@@ -252,7 +252,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-003",
+    "id": "java-mysql-029",
     "module": "MySQL",
     "difficulty": 2,
     "question": "MVCC、Read View、undo log 如何实现一致性读？",
@@ -261,7 +261,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-004",
+    "id": "java-mysql-030",
     "module": "MySQL",
     "difficulty": 2,
     "question": "快照读和当前读有什么区别，哪些 SQL 会加锁？",
@@ -270,7 +270,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-005",
+    "id": "java-mysql-031",
     "module": "MySQL",
     "difficulty": 2,
     "question": "InnoDB 的记录锁、间隙锁和临键锁如何触发？",
@@ -279,7 +279,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-006",
+    "id": "java-mysql-032",
     "module": "MySQL",
     "difficulty": 2,
     "question": "InnoDB 如何避免幻读，为什么 RR 下仍要理解 next-key lock？",
@@ -288,7 +288,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-007",
+    "id": "java-mysql-033",
     "module": "MySQL",
     "difficulty": 2,
     "question": "死锁如何产生，如何通过日志定位和降低死锁概率？",
@@ -297,7 +297,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-008",
+    "id": "java-mysql-034",
     "module": "MySQL",
     "difficulty": 2,
     "question": "锁定读、NOWAIT 和 SKIP LOCKED 如何使用？",
@@ -306,7 +306,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-009",
+    "id": "java-mysql-035",
     "module": "MySQL",
     "difficulty": 3,
     "question": "自增锁 innodb_autoinc_lock_mode 如何影响并发插入？",
@@ -315,7 +315,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-010",
+    "id": "java-mysql-036",
     "module": "MySQL",
     "difficulty": 3,
     "question": "长事务会带来哪些 undo、锁等待、主从延迟和 purge 问题？",
@@ -324,7 +324,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-011",
+    "id": "java-mysql-037",
     "module": "MySQL",
     "difficulty": 3,
     "question": "事务中的 autocommit、显式事务和只读事务有什么区别？",
@@ -333,7 +333,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-012",
+    "id": "java-mysql-038",
     "module": "MySQL",
     "difficulty": 3,
     "question": "分布式事务、XA、TCC、Saga 和本地消息表如何取舍？",
@@ -342,7 +342,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-013",
+    "id": "java-mysql-039",
     "module": "MySQL",
     "difficulty": 3,
     "question": "幂等、唯一约束和乐观锁如何配合处理并发写？",
@@ -351,7 +351,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-014",
+    "id": "java-mysql-040",
     "module": "MySQL",
     "difficulty": 3,
     "question": "在线业务如何设计扣库存、转账等强一致写流程？",
@@ -360,7 +360,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-015",
+    "id": "java-mysql-041",
     "module": "MySQL",
     "difficulty": 3,
     "question": "如何监控锁等待、事务年龄和死锁？",
@@ -369,7 +369,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-tx-016",
+    "id": "java-mysql-042",
     "module": "MySQL",
     "difficulty": 3,
     "question": "RC 与 RR 在真实业务中如何选择？",
@@ -378,7 +378,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-rel-001",
+    "id": "java-mysql-043",
     "module": "MySQL",
     "difficulty": 2,
     "question": "redo log、undo log、binlog 分别在何时写入、解决什么问题？",
@@ -387,7 +387,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-rel-002",
+    "id": "java-mysql-044",
     "module": "MySQL",
     "difficulty": 2,
     "question": "两阶段提交如何保证 redo log 和 binlog 的一致性？",
@@ -396,7 +396,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-rel-003",
+    "id": "java-mysql-045",
     "module": "MySQL",
     "difficulty": 2,
     "question": "MySQL 崩溃恢复流程如何利用 redo log 和 undo log？",
@@ -405,7 +405,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-rel-004",
+    "id": "java-mysql-046",
     "module": "MySQL",
     "difficulty": 2,
     "question": "binlog row、statement、mixed 格式有什么区别？",
@@ -414,7 +414,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-rel-005",
+    "id": "java-mysql-047",
     "module": "MySQL",
     "difficulty": 2,
     "question": "主从复制的 dump、relay log、SQL thread 流程是怎样的？",
@@ -423,7 +423,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-rel-006",
+    "id": "java-mysql-048",
     "module": "MySQL",
     "difficulty": 2,
     "question": "半同步复制、GTID 和复制延迟如何影响高可用？",
@@ -432,7 +432,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-rel-007",
+    "id": "java-mysql-049",
     "module": "MySQL",
     "difficulty": 3,
     "question": "主从切换、读写分离和延迟读如何避免读到旧数据？",
@@ -441,7 +441,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-rel-008",
+    "id": "java-mysql-050",
     "module": "MySQL",
     "difficulty": 3,
     "question": "MHA、Orchestrator、MGR/InnoDB Cluster 各自解决什么问题？",
@@ -450,7 +450,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-rel-009",
+    "id": "java-mysql-051",
     "module": "MySQL",
     "difficulty": 3,
     "question": "备份恢复中 mysqldump、xtrabackup、binlog 增量如何取舍？",
@@ -459,7 +459,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-rel-010",
+    "id": "java-mysql-052",
     "module": "MySQL",
     "difficulty": 3,
     "question": "如何做按时间点恢复和演练验证？",
@@ -468,7 +468,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-rel-011",
+    "id": "java-mysql-053",
     "module": "MySQL",
     "difficulty": 3,
     "question": "DDL 变更为什么有风险，online DDL、gh-ost、pt-osc 如何选择？",
@@ -477,7 +477,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-rel-012",
+    "id": "java-mysql-054",
     "module": "MySQL",
     "difficulty": 3,
     "question": "分库分表、分区表和归档策略分别适合什么规模问题？",
@@ -486,7 +486,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-opt-001",
+    "id": "java-mysql-055",
     "module": "MySQL",
     "difficulty": 2,
     "question": "慢查询治理应该如何从采集、归因到改写闭环？",
@@ -495,7 +495,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-opt-002",
+    "id": "java-mysql-056",
     "module": "MySQL",
     "difficulty": 2,
     "question": "InnoDB 缓存和写优化机制如何影响性能？",
@@ -504,7 +504,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-opt-003",
+    "id": "java-mysql-057",
     "module": "MySQL",
     "difficulty": 2,
     "question": "如何判断瓶颈在 CPU、IO、锁等待、连接数还是 SQL 计划？",
@@ -513,7 +513,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-opt-004",
+    "id": "java-mysql-058",
     "module": "MySQL",
     "difficulty": 3,
     "question": "连接池参数、最大连接数和线程模型如何影响 MySQL 稳定性？",
@@ -522,7 +522,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-opt-005",
+    "id": "java-mysql-059",
     "module": "MySQL",
     "difficulty": 3,
     "question": "热点行、热点索引页和大事务如何导致性能抖动？",
@@ -531,7 +531,7 @@
     "source": "精选"
   },
   {
-    "id": "mysql-opt-006",
+    "id": "java-mysql-060",
     "module": "MySQL",
     "difficulty": 3,
     "question": "MySQL 容量规划需要关注哪些核心指标和增长模型？",
