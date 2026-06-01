@@ -5684,7 +5684,7 @@ export default function QuestionDetail() {
 				::highlight(iface-answer-annotation-comment) {
 					text-decoration-line: underline;
 					text-decoration-style: dotted;
-					text-decoration-color: rgba(37, 99, 235, 0.78);
+					text-decoration-color: rgba(37, 99, 235, 0.96);
 					text-decoration-thickness: 2px;
 					text-underline-offset: 5px;
 				}
