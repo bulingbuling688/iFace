@@ -119,6 +119,17 @@ bun dev
  </picture>
 </a>
 
+## 💰 赞赏项目
+
+如果觉得这个项目对你有帮助，欢迎请我喝咖啡 ☕️
+
+> 采取自愿原则, 收到的赞赏将用于提高开发者积极性和开发环境。
+
+<div style="display:flex; gap:24px; align-items:center;">
+  <img src="https://s2.loli.net/2022/12/29/TtNiqZnwy6ESGjO.jpg" alt="WeChat Pay" width="160" />
+  <img src="https://s2.loli.net/2022/12/29/5xk8paK4wGDnAhW.jpg" alt="Alipay" width="160" />
+</div>
+
 ## 🪪 License
 
 [MIT](LICENSE) © 2026 Dogxi
