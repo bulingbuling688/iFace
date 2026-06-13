@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { invalidateQuestionsCache } from '@/hooks/useQuestions'
+import { buildChatCompletionsBody } from '@/lib/aiClient'
 import {
   bulkPutJdMatchReports,
   bulkPutMockInterviews,
@@ -859,12 +860,13 @@ export function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${apiKey}`,
         },
-        body: JSON.stringify({
-          model: finalModel,
-          messages: [{ role: 'user', content: 'Hi, reply with exactly: OK' }],
-          max_tokens: 10,
-          stream: false,
-        }),
+        body: JSON.stringify(
+          buildChatCompletionsBody(
+            { ...finalConfig, model: finalModel, baseUrl: finalBaseUrl, maxTokens: 10 },
+            [{ role: 'user', content: 'Hi, reply with exactly: OK' }],
+            false,
+          ),
+        ),
       })
 
       if (!response.ok) {
