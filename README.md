@@ -1,135 +1,209 @@
-<div align="center">
+# iFace Question Bank
 
-# 😎 iFace
+## Online URL
 
-**八股面试题库 · 智能刷题工具**
+https://iface-question-bank.chatapi.fun
 
-[立即体验](https://face.dogxi.me) · [报告问题](https://github.com/dogxii/iFace/issues) · [功能建议](https://github.com/dogxii/iFace/issues)
+## Overview
 
-![Version](https://img.shields.io/badge/version-1.4.1-6366f1?style=flat-square)
-![License](https://img.shields.io/badge/license-MIT-10b981?style=flat-square)
-![React](https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6?style=flat-square&logo=typescript)
+iFace Question Bank is a browser-based interview practice tool for reviewing technical interview questions, tracking practice progress, and using an AI assistant while preparing answers.
 
-</div>
+This published version is for personal learning and interview preparation. It includes the original iFace question bank plus an imported Python interview question bank from `derekramm/python-interview-questions`.
 
----
+Current capabilities:
 
-## 👀 预览
+- Practice built-in interview questions by category, module, difficulty, and status.
+- Review detailed answers with Markdown rendering.
+- Track progress in the browser's local storage.
+- Import custom JSON question sets.
+- Configure an AI assistant provider in the browser settings.
 
-https://face.dogxi.me
+## Features
 
-<div align="center">
-  <img src="docs/screenshots/dashboard.png" alt="概览页" width="49%" />
-  <img src="docs/screenshots/practice.png" alt="练习页" width="49%" />
-  <br/><br/>
-  <img src="docs/screenshots/question-detail.png" alt="题目详情 + AI 助手" width="49%" />
-  <img src="docs/screenshots/settings.png" alt="设置面板" width="49%" />
-</div>
+- Built-in question banks for frontend, Java, Golang, AI Agent topics, and Python.
+- Python question modules including basics, advanced features, data types, algorithms, crawlers, concurrency/networking, and engineering.
+- Local-only progress and settings storage.
+- Import/export workflow for custom question data.
+- Progressive Web App assets and service worker support.
+- Static Nginx deployment on the VPS.
 
+## Tech Stack
 
-## 📚 简介
+| Layer | Technology |
+|---|---|
+| Frontend framework | React 19 + TypeScript |
+| Backend framework | Not used for the VPS static deployment |
+| Database | Browser local storage / IndexedDB |
+| Build tool | Vite + Bun |
+| Deployment style | Static files served by Nginx on VPS |
 
-iFace 是一款专为 前端/Agent/Golang 等工程师备战技术面试打造的本地刷题工具。题库、进度、AI 对话全部存储在浏览器本地，无需注册、无需服务器，打开即用。
+## Local Development
 
-**核心理念：** 不只是背题，而是真正理解——通过 AI 教练辅助、进度追踪和薄弱点分析，帮助你在面试中清晰表达。
-
-
-## ⚡️ 功能特性
-
-- 题库管理：内置高频题库，支持自定义导入
-- 智能刷题：按模块、难度、状态灵活练习
-- AI 面试教练：辅助拆题、复盘、追问和模拟面试
-- 数据与进度：本地保存进度，支持导入导出和备份
-
-
-## 🚀 快速开始
-
-https://face.dogxi.me
-
-线上版本，实时更新，支持 GitHub 登陆备份数据。
-
-## 本地运行
+Install dependencies:
 
 ```bash
-# 克隆仓库
-git clone https://github.com/dogxii/iFace.git
-cd iFace
-
-# 安装依赖（推荐 bun，也可用 npm/pnpm）
 bun install
-
-# 启动开发服务器
-bun dev
 ```
 
-访问 [http://localhost:5173](http://localhost:5173)
+Start the development server:
 
-## 🧭 使用指南
-
-### 导入题库
-
-1. 进入「**导入**」页面
-2. 点击「加载内置题库」即可使用开箱即用的题目
-3. 或上传自己的 JSON 文件（格式见下方）
-
-<details>
-<summary>自定义题库 JSON 格式</summary>
-
-```json
-[
-  {
-    "question": "请解释 JavaScript 中的事件循环机制",
-    "answer": "事件循环是 JS 处理异步操作的核心机制...",
-    "module": "JS基础",
-    "difficulty": 2,
-    "tags": ["异步", "事件循环", "宏任务", "微任务"]
-  }
-]
+```bash
+bun run dev
 ```
 
-| 字段         | 类型        | 必填 | 说明                           |
-| ------------ | ----------- | ---- | ------------------------------ |
-| `question`   | string      | ✅   | 题目内容                       |
-| `answer`     | string      | ✅   | 参考答案（支持 Markdown）      |
-| `module`     | string      | ✅   | 所属模块                       |
-| `difficulty` | 1 \| 2 \| 3 | ✅   | 难度：1 初级 / 2 中级 / 3 高级 |
-| `tags`       | string[]    | —    | 标签（用于薄弱点聚合）         |
+Local URL:
 
-</details>
+```text
+http://localhost:5173
+```
 
-### 配置 AI 助手
+Build production assets:
 
-1. 点击右上角**齿轮图标**打开设置
-2. 切换到「**AI 助手**」tab
-3. 填入 API Key 和 Base URL，选择模型，保存
-4. 在任意题目详情页即可开始与 AI 对话
+```bash
+bun run build
+```
 
-> API Key 仅存储在本地浏览器，不会上传到任何服务器。
+Validate bundled question files:
 
----
+```bash
+bun run check:questions
+```
 
-## 📈 项目 Star 历史
+## Environment Variables
 
-<a href="https://www.star-history.com/?repos=dogxii%2Fiface&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=dogxii/iface&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=dogxii/iface&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=dogxii/iface&type=date&legend=top-left" />
- </picture>
-</a>
+The static VPS deployment does not require server-side secrets.
 
-## 💰 赞赏项目
+| Name | Purpose | Required | Example |
+|---|---|---|---|
+| VITE_GITHUB_CLIENT_ID | Optional GitHub OAuth client ID exposed to the browser at build time | No | your_github_oauth_app_client_id |
+| IFACE_AI_API_KEY | Optional local smoke-test API key for CLI checks only | No | sk-*** |
+| IFACE_AI_BASE_URL | Optional local smoke-test AI base URL for CLI checks only | No | https://api.example.com/v1 |
+| IFACE_AI_MODEL | Optional local smoke-test model name for CLI checks only | No | gpt-example |
+| IFACE_GIST_TOKEN | Optional local smoke-test token for Gist sync checks only | No | ghp_*** |
 
-如果觉得这个项目对你有帮助，欢迎请我喝咖啡 ☕️
+Do not commit real keys. Runtime API keys entered in the app are stored in the user's browser.
 
-> 采取自愿原则, 收到的赞赏将用于提高开发者积极性和开发环境。
+## Deployment
 
-<div style="display:flex; gap:24px; align-items:center;">
-  <img src="https://s2.loli.net/2022/12/29/TtNiqZnwy6ESGjO.jpg" alt="WeChat Pay" width="160" />
-  <img src="https://s2.loli.net/2022/12/29/5xk8paK4wGDnAhW.jpg" alt="Alipay" width="160" />
-</div>
+Project slug:
 
-## 🪪 License
+```text
+iface-question-bank
+```
 
-[MIT](LICENSE) © 2026 Dogxi
+GitHub repo:
+
+```text
+https://github.com/bulingbuling688/iface-question-bank
+```
+
+VPS:
+
+```text
+34.81.224.158
+```
+
+VPS path:
+
+```text
+/opt/apps/iface-question-bank
+```
+
+Runtime:
+
+```text
+Static files served by Nginx
+```
+
+Build command:
+
+```bash
+bun run build
+```
+
+Start command:
+
+```text
+Not applicable
+```
+
+Internal port:
+
+```text
+Not applicable
+```
+
+Public domain:
+
+```text
+https://iface-question-bank.chatapi.fun
+```
+
+Nginx config:
+
+```text
+/etc/nginx/sites-available/iface-question-bank.conf
+/etc/nginx/sites-enabled/iface-question-bank.conf
+```
+
+Cloudflare DNS:
+
+```text
+A iface-question-bank -> 34.81.224.158, proxied
+```
+
+Environment file:
+
+```text
+Not applicable
+```
+
+## Directory Structure
+
+```text
+.
+├── api/                 # Vercel serverless auth function from the upstream app
+├── public/questions/    # Built-in question JSON files
+├── scripts/             # Validation and smoke-check scripts
+├── src/                 # React application source
+├── dist/                # Production build output, generated locally
+├── package.json         # Scripts and dependencies
+├── vite.config.ts       # Vite and PWA configuration
+└── vercel.json          # Upstream Vercel rewrite config
+```
+
+## Common Commands
+
+Check Nginx status on the VPS:
+
+```bash
+ssh new 'sudo systemctl status nginx --no-pager'
+```
+
+Validate and reload Nginx:
+
+```bash
+ssh new 'sudo nginx -t && sudo systemctl reload nginx'
+```
+
+View Nginx logs:
+
+```bash
+ssh new 'sudo tail -n 100 /var/log/nginx/iface-question-bank.access.log'
+ssh new 'sudo tail -n 100 /var/log/nginx/iface-question-bank.error.log'
+```
+
+Redeploy static files:
+
+```bash
+bun run build
+scp tmp/iface-question-bank-dist.zip new:/tmp/iface-question-bank-dist.zip
+ssh new 'cd /opt/apps/iface-question-bank && unzip -oq /tmp/iface-question-bank-dist.zip -d dist'
+```
+
+## Maintenance Notes
+
+- The VPS deployment is static. The upstream `api/auth.js` Vercel function is not active in this Nginx-only deployment.
+- GitHub login and Gist backup require a compatible server-side OAuth callback before they should be considered production-ready on this domain.
+- The app itself remains usable for local question practice without GitHub login.
+- Do not modify the protected production subdomains `api.chatapi.fun`, `cpa.chatapi.fun`, `helper.chatapi.fun`, or `grok.chatapi.fun` for this project.
